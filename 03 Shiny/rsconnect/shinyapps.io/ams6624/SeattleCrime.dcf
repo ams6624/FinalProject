@@ -1,8 +1,8 @@
 name: SeattleCrime
 account: ams6624
 server: shinyapps.io
-bundleId: 325896
+bundleId: 326147
 url: https://ams6624.shinyapps.io/SeattleCrime
-when: 1449473093.03224
+when: 1449507189.24202
 asMultiple: FALSE
 asStatic: FALSE

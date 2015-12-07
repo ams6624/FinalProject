@@ -56,7 +56,7 @@ dashboardPage(
                 box(actionButton(inputId = "clicks3",  label = "Click me"),
                     checkboxGroupInput(inputId = "types", label = "Crime Types", choices = c("Larceny-Theft", "Assault", "Robbery", "Burglary", "Motor Vehicle Theft", "Rape", "Homicide"), selected = "Burglary")),
                 
-                box(title = "Bar Chart", background = "light-blue",plotOutput("distPlot3"))
+                box(title = "Pie Chart", background = "light-blue",plotOutput("distPlot3"))
               )
       )
     )

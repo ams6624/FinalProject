@@ -74,7 +74,7 @@ shinyServer(function(input, output) {
       scale_x_discrete() +
       scale_y_continuous() +
       facet_grid(.~CRIME_TYPE, labeller=label_both) + 
-      labs(title='2013 Incidents per Crime') +
+      labs(title='Incidents per Crime') +
       labs(x="Date", y=paste("Number of Incidents")) +
       layer(data = df2(), 
             mapping = aes(x=DATE1, y=as.numeric(stat), fill = DATE1), 
