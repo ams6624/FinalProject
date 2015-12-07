@@ -2,26 +2,26 @@ require(tidyr)
 require(dplyr)
 require(ggplot2)
 
-setwd("~/DataVisualization/CVSs")
+setwd("~/DataVisualization/DV_PROJECTF")
 
-file_path <- "CrimesChicagoFilter.csv"
+file_path <- "SeattlePolice.csv"
 
 df <- read.csv(file_path, stringsAsFactors = FALSE)
 
 # Replace "." (i.e., period) with "_" in the column names.
-names(df) <- gsub("\\.+", "_", names(df))
+#names(df) <- gsub("\\.+", "_", names(df))
 
-#df <- rename(df, Date1=Date)
+#df <- rename(df, Date1=REPORT_DATE)
 #df <- rename(df, Time1=Time)
 str(df)
 
-measures <- c("BEAT", "WARD", "X_COORDINATE","Y_COORDINATE", "LATITUDE", "LONGITUDE" )
+dimensions <- c("Summarized.Offense.Description", "District.Sector","Year","Month")
 
 for(n in names(df)) {
   df[n] <- data.frame(lapply(df[n], gsub, pattern="[^ -~]",replacement= ""))
 }
 
-dimensions <- setdiff(names(df), measures)
+measures <- c("Latitude","Longitude")
 
 if( length(measures) > 1 || ! is.na(dimensions)) {
   for(d in dimensions) {
@@ -36,7 +36,7 @@ if( length(measures) > 1 || ! is.na(dimensions)) {
 }
 library(lubridate)
 
-df$DATE_OF_OCCURRENCE <- gsub(" [0-9]+:.*", "", gsub(" UTC", "", mdy(as.character(df$Date1), tz="UTC")))
+df$Date1 <- gsub(" [0-9]+:.*", "", gsub(" UTC", "", mdy(as.character(df$Date1), tz="UTC")))
 
 if( length(measures) > 1 || ! is.na(measures)) {
   for(m in measures) {
@@ -46,8 +46,8 @@ if( length(measures) > 1 || ! is.na(measures)) {
 
 write.csv(df, paste(gsub(".csv", "", file_path), ".reformatted.csv", sep=""), row.names=FALSE, na = "")
 
-Crimes <- gsub(" +", "_", gsub("[^A-z, 0-9, ]", "", gsub(".csv", "", file_path)))
-sql <- paste("CREATE TABLE", Crimes, "(\n-- Change table_name to the table name you want.\n")
+SeattleCrimes <- gsub(" +", "_", gsub("[^A-z, 0-9, ]", "", gsub(".csv", "", file_path)))
+sql <- paste("CREATE TABLE", SeattleCrimes, "(\n-- Change table_name to the table name you want.\n")
 if( length(measures) > 1 || ! is.na(dimensions)) {
   for(d in dimensions) {
     sql <- paste(sql, paste(d, "varchar2(4000),\n"))
@@ -61,3 +61,4 @@ if( length(measures) > 1 || ! is.na(measures)) {
 }
 sql <- paste(sql, ");")
 cat(sql)
+Chat Conversation End
